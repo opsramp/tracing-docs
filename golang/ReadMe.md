@@ -20,4 +20,4 @@ Reference Link: <https://opentelemetry.io/docs/instrumentation/go/getting-starte
 
 Follow the steps at: <https://opentelemetry.io/docs/instrumentation/go/>
 
-For basic tracer creation check file tracer.go in attachment
+For example of spans check the handlers directory and for details on how to create a tracer check tracing directory
