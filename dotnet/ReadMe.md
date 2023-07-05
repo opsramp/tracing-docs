@@ -9,9 +9,9 @@ OpenTelemetry for .NET supports all officially supported versions of .NET Core a
 - Installing dependencies
 
     ```bash
-  dotnet add package OpenTelemetry.Extensions.Hosting
-  dotnet add package OpenTelemetry.Instrumentation.AspNetCore --prerelease
-      ```
+      dotnet add package OpenTelemetry.Extensions.Hosting
+      dotnet add package OpenTelemetry.Instrumentation.AspNetCore --prerelease
+    ```
 
 
     Go through the Automatic and Manual folders for finding the instrumentation of Hello world web app.
@@ -21,4 +21,4 @@ OpenTelemetry for .NET supports all officially supported versions of .NET Core a
     ```bash
     OTEL_EXPORTER_OTLP_ENDPOINT=http://localhost:4317
     export OTEL_EXPORTER_OTLP_ENDPOINT
-      ```
+    ```
