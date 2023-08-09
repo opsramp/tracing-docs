@@ -53,3 +53,85 @@ $ OTEL_SERVICE_NAME=<your-service-name> \
 Reference links: <https://opentelemetry.io/docs/instrumentation/python/manual/>
 
 check the example in manual.py for a simple trace code example
+
+### Acquiring a new tracer
+
+```python
+from opentelemetry import trace
+from opentelemetry.sdk.trace import TracerProvider
+from opentelemetry.sdk.trace.export import (
+    BatchSpanProcessor,
+)
+
+## Creating a Tracer and Expoter ########
+provider = TracerProvider(resource=resource)
+processor = BatchSpanProcessor(
+    OTLPSpanExporter(endpoint="http://0.0.0.0:9090"))
+provider.add_span_processor(processor)
+
+# Sets the global default tracer provider
+trace.set_tracer_provider(provider)
+
+# Creates a tracer from the global tracer provider with library.name
+tracer = trace.get_tracer("library_name_here")
+```
+
+### Spans
+
+```python
+def do_work():
+    with tracer.start_as_current_span("span-name") as span:
+        # do some work that 'span' will track
+        print("doing some work...")
+        # When the 'with' block goes out of scope, 'span' is closed for you
+
+```
+
+#### creating child spans
+
+```python
+def do_work():
+    with tracer.start_as_current_span("parent") as parent:
+        # do some work that 'parent' tracks
+        print("doing some work...")
+        # Create a nested span to track nested work
+        with tracer.start_as_current_span("child") as child:
+            # do some work that 'child' tracks
+            print("doing some nested work...")
+            # the nested span is closed when it's out of scope
+
+        # This span is also closed when it goes out of scope
+
+```
+
+#### adding attributes
+
+```python
+from opentelemetry import trace
+
+with tracer.start_as_current_span("span-name") as span:
+    span.set_attribute("operation.value", 1)
+    span.set_attribute("operation.name", "Saying hello!")
+    span.set_attribute("operation.other-stuff", [1, 2, 3])
+```
+
+#### adding events
+
+```python
+from opentelemetry import trace
+
+with tracer.start_as_current_span("span-name") as span:
+    span.add_event("something went wrong!")
+
+```
+
+#### setting status
+
+```python
+
+from opentelemetry import trace
+from opentelemetry.trace import Status, StatusCode
+
+with tracer.start_as_current_span("span-name") as span:
+    span.set_status(Status(StatusCode.ERROR))
+```
