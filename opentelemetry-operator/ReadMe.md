@@ -3,6 +3,7 @@
 ## Deploying OTEL Operator
 
 > **_Deployment Using Helm:_** <https://opentelemetry.io/docs/kubernetes/helm/operator/>
+> 
 > **_Deployment Using YAML:_** <https://opentelemetry.io/docs/kubernetes/operator/>
 
 ### Using Kubernetes YAML files
