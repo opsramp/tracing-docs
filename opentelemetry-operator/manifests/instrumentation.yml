@@ -1,0 +1,23 @@
+apiVersion: opentelemetry.io/v1alpha1
+kind: Instrumentation
+metadata:
+  name: otel-operator-auto-inst
+spec:
+  exporter:
+    endpoint: http://host.lima.internal:9090
+  resource:
+    addK8sUIDAttributes: true
+  propagators:
+    - tracecontext
+    - baggage
+  go:
+    image: ghcr.io/open-telemetry/opentelemetry-go-instrumentation/autoinstrumentation-go:v0.3.0-alpha
+  python:
+    image: ghcr.io/open-telemetry/opentelemetry-operator/autoinstrumentation-python:0.40b0
+    env:
+      - name: OTEL_EXPORTER_OTLP_ENDPOINT
+        value: http://host.lima.internal:8082
+  dotnet:
+    env:
+      - name: OTEL_EXPORTER_OTLP_ENDPOINT
+        value: http://host.lima.internal:8082
